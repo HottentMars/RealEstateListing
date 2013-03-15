@@ -13,10 +13,10 @@ public abstract class TDG {
 	protected String INSERT = "";
 	protected String UPDATE = "";
 	protected String DELETE = "";
-
+	
 	public static String SELECT_ALL = "";
 	public static String SELECT = "";
-
+	
 	public abstract void SetBaseName();
 
 	public abstract void SetInsert();

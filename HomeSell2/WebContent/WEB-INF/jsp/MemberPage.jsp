@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="domain.model.person.Person"%>
+<%@page import="domain.model.person.Owner"%>
 <%@page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -10,15 +10,15 @@
 </head>
 <body>
 <%
-Person mperson = (Person)request.getAttribute("aMember");
+Owner mperson = (Owner)request.getAttribute("aMember");
 String warning = (String)request.getAttribute("warning");
 %>
 <% if(warning != null) { %><b>Warning: </b> <%=warning %><br/> <% } %>
-Welcome <%= mperson.getFirstName()%> <%= mperson.getLastName()%>
+Welcome <%= mperson.getFirstName()%> <%= mperson.getLastName()%> (<a href="BuddyAge?command=application.command.OwnerLogout">Logout</a>)
 <%request.setAttribute("mperson", mperson); %>
 
-<br><a href="BuddyAge?command=application.command.Unsubscribe&Email=<%=mperson.getEmailAddress()%>">Un-subscribe</a>
- <%--<a href="Update.jsp?Email=<%=mperson.getEmailAddress()%>&Fname=<%=mperson.getFirstName()%>&Lname=<%=mperson.getLastName()%>&DOB=<%=mperson.getDOB()%>&Phone=<%=mperson.getPhoneNumber()%>">Update</a>--%>
+<br><a href="BuddyAge?command=application.command.OwnerUnsubscribe">Unsubscribe</a>
+<br><a href="BuddyAge?command=application.command.OwnerProfileInformation">Update profile information</a>
 <br><a href="index.html">Menu</a><br>
 </body>
 </html>

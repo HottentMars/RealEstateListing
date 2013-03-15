@@ -13,7 +13,9 @@
 <%
 List<Person> people = (List<Person>)request.getAttribute("people");
 for(Person person: people) {
-%><a href=""><%= person.getFirstName()%> <%=person.getLastName() %></a><br/>
+%>
+<%-- <a href=""><%= person.getFirstName()%> <%=person.getLastName() %></a><br/> --%>
+<%= person.getFirstName()%> <%=person.getLastName() %><br/>
 <% } %>
 
 <a href="index.html">Menu</a><br>

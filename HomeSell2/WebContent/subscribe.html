@@ -3,17 +3,41 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script language="javascript" src="cal2.js">
+/*
+Xin's Popup calendar script- Xin Yang (http://www.yxscripts.com/)
+Script featured on/available at http://www.dynamicdrive.com/
+This notice must stay intact for use
+*/
+</script>
+<script language="javascript" src="cal_conf2.js"></script>
+<script type="text/javascript">
+	function check_password() {
+		if (document.forms["registration"]["Password"].value != null
+				&& document.forms["registration"]["Password"].value != ""
+				&& document.forms["registration"]["Password"].value == document.forms["registration"]["Password_check"].value)
+			return true;
+		else {
+			alert("Please enter the correct values");
+			return false;
+		}
+	}
+</script>
 </head>
 <body>
-<h2>Subscribe</h2>
+	<h2>Subscribe</h2>
 	<br>
-	<form action="BuddyAge?command=application.command.AddMember"
-		method="post">
+	<form name="registration"
+		action="BuddyAge?command=application.command.OwnerSubscribe" method="post"
+		onsubmit="return check_password()">
 		Email Address: <input type="text" name="Email" /><br> First
-		Name: <input type="text" name="Fname" /><br> Last Name: <input
-			type="text" name="Lname" /><br> Date of birth: <input
-			type="text" name="DOB" /><br> Phone Number: <input type="text"
-			name="Phone" /><br> <input type="submit" value="submit" /><br>
+		Name: <input type="text" name="Fname" /><br> 
+		Last Name: <input type="text" name="Lname" /><br> 
+		Date of birth: <input type="text" name="DOB"/> <small><a href="javascript:showCal('Calendar1')">Select Date</a></small><br> 
+		Phone Number: <input type="text" name="Phone" /><br> 
+		Enter a password: <input type="password" name="Password" /><br> 
+		Reenter the same password: <input type="password" name="Password_check" /><br> 
+		<input type="submit" value="submit" /><br>
 	</form>
 </body>
 </html>

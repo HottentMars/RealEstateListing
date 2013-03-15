@@ -15,7 +15,8 @@ public class BrowsePeople extends FrontCommand{
 	public String execute(HttpServletRequest request) {
 		try {
 			//session = request.getSession(true);
-			request.setAttribute("people", Mapper.findAll("Person"));
+			//session.invalidate();
+			request.setAttribute("people", Mapper.findAll("Owner"));
 			return "/WEB-INF/jsp/BrowsePeopleTV.jsp";
 		} catch (Exception e) {
 			e.printStackTrace();

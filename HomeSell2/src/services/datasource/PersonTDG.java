@@ -13,8 +13,6 @@ import domain.model.person.Person;
 
 public class PersonTDG extends TDG {
 	
-	private static PersonTDG instance = null;
-
 	public PersonTDG() {
 		SetBaseName();
 		SetTable();
@@ -23,13 +21,6 @@ public class PersonTDG extends TDG {
 		SetDelete();
 		SetSelectAll();
 		SetSelect();
-	}
-
-	public static PersonTDG getInstance() {
-		if (instance == null) {
-			instance = new PersonTDG();
-		}
-		return instance;
 	}
 
 	@Override

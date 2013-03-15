@@ -5,21 +5,23 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 
 
-import domain.model.person.Person;
+//import domain.model.person.Person;
 import domain.model.mapper.Mapper;
+import domain.model.person.Owner;
 
-public class Unsubscribe  extends FrontCommand {
+public class OwnerUnsubscribe  extends FrontCommand {
 
-	public Unsubscribe() {
+	public OwnerUnsubscribe() {
         super();
     }
 	public String execute(HttpServletRequest request) {
 		
-		//<a href="BuddyAge?command=application.command.Unsubscribe&Email=<%=mperson.getEmailAddress()%>">Un-subscribe</a>
-		String email = request.getParameter("Email");
-		//Person aMember = new Person(email,null,null,null,0);
+		session = request.getSession();
+		Owner aMember= (Owner) session.getAttribute("aMember");
+
 		try {
-			Mapper.delete(email, "Person");
+			Mapper.delete(aMember.getEmailAddress(), "Owner");
+			Mapper.delete(aMember.getEmailAddress(), "Person");
 		} catch (InstantiationException | IllegalAccessException
 				| ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block

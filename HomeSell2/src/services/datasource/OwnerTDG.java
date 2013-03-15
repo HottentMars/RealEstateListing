@@ -9,7 +9,18 @@ import java.util.List;
 import domain.model.person.*;
 
 public class OwnerTDG extends TDG{
-
+	
+	public OwnerTDG()
+	{
+		SetBaseName();
+		SetTable();
+		SetInsert();
+		SetUpdate();
+		SetDelete();
+		SetSelectAll();
+		SetSelect();
+	}
+	
 	@Override
 	public void SetBaseName() {
 		// TODO Auto-generated method stub
@@ -21,7 +32,7 @@ public class OwnerTDG extends TDG{
 		// TODO Auto-generated method stub
 		INSERT = "INSERT INTO "
 				+ TABLE
-				+ " (email_address, password) VALUES (?,?,?,?,?);";
+				+ " (email_address, password) VALUES (?,?);";
 	}
 
 	@Override
@@ -57,8 +68,9 @@ public class OwnerTDG extends TDG{
 		// TODO Auto-generated method stub
 		try {
 			if(rs.next()){
-				Person ThePerson = (Person)PersonTDG.getInstance().find(rs.getString("p.email_address"));
-				Person result = new Owner(
+				TDG Another = new PersonTDG();
+				Person ThePerson = (Person)Another.find(rs.getString("p.email_address"));
+				Owner result = new Owner(
 				rs.getString("p.email_address"),
 				rs.getString("p.password"),
 				ThePerson.getFirstName(),
@@ -79,10 +91,14 @@ public class OwnerTDG extends TDG{
 	public List<Object> getAllObject(ResultSet rs) {
 		// TODO Auto-generated method stub
 		List<Object> people = new ArrayList<Object>();
+		
 		try {
+			
 			while(rs.next()){ 
+				if(rs.previous());
 				Owner result = (Owner)getObject(rs);				
 				people.add(result);
+				
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -96,7 +112,8 @@ public class OwnerTDG extends TDG{
 		// TODO Auto-generated method stub
 		Owner person = (Owner) Obj;
 		try {
-			PersonTDG.getInstance().insert(Obj);
+			TDG Another = new PersonTDG();
+			Another.insert(Obj);
 			ps.setString(1, person.getEmailAddress());
 			ps.setString(2, person.getpassword());
 			
@@ -112,7 +129,8 @@ public class OwnerTDG extends TDG{
 		// TODO Auto-generated method stub
 		Owner person = (Owner) Obj;
 		try {
-			PersonTDG.getInstance().update(Obj);
+			TDG Another = new PersonTDG();
+			Another.update(Obj);
 			ps.setString(1, person.getpassword());
 			ps.setString(2, person.getEmailAddress());
 			
