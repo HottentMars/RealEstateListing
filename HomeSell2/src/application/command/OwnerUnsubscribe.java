@@ -22,8 +22,8 @@ public class OwnerUnsubscribe  extends FrontCommand {
 		try {
 			Mapper.delete(aMember.getEmailAddress(), "Owner");
 			Mapper.delete(aMember.getEmailAddress(), "Person");
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException | SQLException e) {
+		//} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

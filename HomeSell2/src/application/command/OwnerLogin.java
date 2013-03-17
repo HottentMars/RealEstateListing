@@ -23,8 +23,8 @@ public class OwnerLogin extends FrontCommand {
 		Owner aMember = null;//= new Person(email, null, null, null, 0);
 		try {
 			aMember = (Owner) Mapper.find(email, "Owner");
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException | SQLException e) {
+		//} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -30,8 +30,8 @@ public class OwnerUpdate extends FrontCommand {
 		try {
 			Mapper.update(aMember, "Owner");
 			request.setAttribute("aMember", aMember);
-		} catch (InstantiationException | IllegalAccessException
-				| ClassNotFoundException | SQLException e) {
+		//} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
