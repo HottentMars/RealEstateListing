@@ -14,7 +14,7 @@ public class OwnerLogin extends FrontCommand {
 	public OwnerLogin() {
 		super();
 	}
-	//ownerlogin test 6
+	//ownerlogin test 7
 	public String execute(HttpServletRequest request) {
 		session = request.getSession();
 		System.out.println("The session id is: "+session.getId());
