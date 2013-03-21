@@ -19,7 +19,7 @@ public class FrontController extends HttpServlet {
 	}
 
 	public static void prepareDbRegistry(String db_id) {
-		//testing change 5
+		//testing change 9
 	}
 
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
