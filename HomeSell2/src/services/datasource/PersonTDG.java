@@ -12,119 +12,119 @@ import domain.model.person.Person;
 //import domain.model.person.PersonIdentityMap;
 
 public class PersonTDG extends TDG {
-	
+
 	public PersonTDG() {
-		SetBaseName();
-		SetTable();
-		SetInsert();
-		SetUpdate();
-		SetDelete();
-		SetSelectAll();
-		SetSelect();
+		setBaseName();
+		setTable();
+		setInsert();
+		setUpdate();
+		setDelete();
+		setSelectAll();
+		setSelect();
 	}
 
 	@Override
-	public void SetBaseName() {
+	public void setBaseName() {
 		BASE_NAME = "Person";
 	}
 
 	@Override
-	public void SetInsert() {
+	public void setInsert() {
 		INSERT = "INSERT INTO "
 				+ TABLE
-				+ " (email_address, first_name, last_name, date_of_birth, phone_number) VALUES (?,?,?,?,?);";
+				+ " (version, email_address, first_name, last_name, date_of_birth, phone_number) VALUES (?,?,?,?,?,?);";
 	}
 
 	@Override
-	public void SetUpdate() {
+	public void setUpdate() {
 		UPDATE = "UPDATE "
 				+ TABLE
-				+ " AS p set p.first_name=?, p.last_name=?, p.date_of_birth=?, p.phone_number=? WHERE p.email_address=?;";
+				+ " AS p set p.version=p.version+1, p.email_address=?, p.first_name=?, p.last_name=?, p.date_of_birth=?, p.phone_number=? WHERE p.id=? AND p.version=?;";
 	}
 
 	@Override
-	public void SetDelete() {
-		DELETE = "DELETE p FROM " + TABLE + " AS p WHERE p.email_address=?;";
+	public void setDelete() {
+		DELETE = "DELETE p FROM " + TABLE + " AS p WHERE p.id=? AND p.version=?;";
 	}
 
 	@Override
-	public void SetSelectAll() {
-		SELECT_ALL = "SELECT p.email_address, p.first_name, p.last_name, p.date_of_birth, p.phone_number FROM "
+	public void setSelectAll() {
+		SELECT_ALL = "SELECT p.id, p.version, p.email_address, p.first_name, p.last_name, p.date_of_birth, p.phone_number FROM "
 				+ TABLE + " AS p;";
 	}
 
 	@Override
-	public void SetSelect() {
-		SELECT = "SELECT p.email_address, p.first_name, p.last_name, p.date_of_birth, p.phone_number FROM "
+	public void setSelect() {
+		SELECT = "SELECT p.id, p.version, p.email_address, p.first_name, p.last_name, p.date_of_birth, p.phone_number FROM "
 				+ TABLE + " AS p WHERE p.email_address=?;";
 	}
 
 	@Override
-	public PreparedStatement FillInsert(Object Obj, PreparedStatement ps) {
-		Person person = (Person) Obj;
+	public PreparedStatement fillInsert(Object obj, PreparedStatement ps) {
+		Person person = (Person) obj;
+		try {
+			//ps.setLong(1, person.getId());
+			ps.setInt(1, person.getVersion());
+			ps.setString(2, person.getEmailAddress());
+			ps.setString(3, person.getFirstName());
+			ps.setString(4, person.getLastName());
+			ps.setDate(5, person.getDOB());
+			ps.setLong(6, person.getPhoneNumber());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ps;
+	}
+
+	@Override
+	public PreparedStatement fillUpdate(Object obj, PreparedStatement ps) {
+		Person person = (Person) obj;
 		try {
 			ps.setString(1, person.getEmailAddress());
 			ps.setString(2, person.getFirstName());
 			ps.setString(3, person.getLastName());
 			ps.setDate(4, person.getDOB());
 			ps.setLong(5, person.getPhoneNumber());
+			ps.setLong(6, person.getId());
+			ps.setInt(7, person.getVersion());
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ps;
 	}
 
-	@Override
-	public PreparedStatement FillUpdate(Object Obj, PreparedStatement ps) {
-		Person person = (Person) Obj;
+	public Object getObject(ResultSet rs) {
 		try {
-			ps.setString(1, person.getFirstName());
-			ps.setString(2, person.getLastName());
-			ps.setDate(3, person.getDOB());
-			ps.setLong(4, person.getPhoneNumber());
-			ps.setString(5, person.getEmailAddress());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return ps;
-	}
-
-	public Object getObject(ResultSet rs)
-	 {
-		try {
-			if(rs.next()){ 
+			if (rs.next()) {
 				Person result = new Person(
-				rs.getString("p.email_address"),
-				rs.getString("p.first_name"),
-				rs.getString("p.last_name"),
-				rs.getDate("p.date_of_birth"),
-				rs.getLong("p.phone_number")
-				);				
+						rs.getLong("p.id"),
+						rs.getInt("p.version"),
+						rs.getString("p.email_address"),
+						rs.getString("p.first_name"),
+						rs.getString("p.last_name"),
+						rs.getDate("p.date_of_birth"),
+						rs.getLong("p.phone_number"));
 				return result;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
-	 }
-	
-	public List<Object> getAllObject(ResultSet rs)
-	{
+	}
+
+	public List<Object> getAllObject(ResultSet rs) {
 		List<Object> people = new ArrayList<Object>();
 		try {
-			while(rs.next()){ 
-				Person result = (Person)getObject(rs);				
+			while (rs.next()) {
+				Person result = (Person) getObject(rs);
 				people.add(result);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return people;
-	 }
-	
+	}
+
 }

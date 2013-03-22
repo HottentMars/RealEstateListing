@@ -23,7 +23,7 @@ public class Mapper<T> {
 	}
 	
 	//The method "Object find(Object ClassObject, String TheClassName)" returns a specific row from the database. ClassObject provides minimal information to search for that desired row in the database.  
-	public static Object find(String ObjectId, String TheClassName) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
+	public static Object find(Object ObjectId, String TheClassName) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
 	//public static void find(Object ClassObject, String TheClassName) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException{
 		// first check whether the person is in the identity map
 		
@@ -51,7 +51,7 @@ public class Mapper<T> {
 		}	
 	}
 	
-	public static void delete(String ObjectId, String TheClassName) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+	public static void delete(Object ObjectId, String TheClassName) throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		ThatTDG = ReturnTDGInstance(TheClassName);
 		int count = ThatTDG.delete(ObjectId);
 		if(count == 0) {

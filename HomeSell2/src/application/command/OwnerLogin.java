@@ -30,7 +30,7 @@ public class OwnerLogin extends FrontCommand {
 		}
 		
 		//String password = request.getParameter("password");
-		if(aMember.getpassword().equals(request.getParameter("password")))
+		if(aMember.getPassword().equals(request.getParameter("password")))
 		{
 			session.setAttribute("aMember", aMember);
 			request.setAttribute("aMember", aMember);

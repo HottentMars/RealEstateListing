@@ -1,5 +1,6 @@
 package services.datasource;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,76 +13,74 @@ public class OwnerTDG extends TDG{
 	
 	public OwnerTDG()
 	{
-		SetBaseName();
-		SetTable();
-		SetInsert();
-		SetUpdate();
-		SetDelete();
-		SetSelectAll();
-		SetSelect();
+		setBaseName();
+		setTable();
+		setInsert();
+		setUpdate();
+		setDelete();
+		setSelectAll();
+		setSelect();
 	}
 	
 	@Override
-	public void SetBaseName() {
-		// TODO Auto-generated method stub
+	public void setBaseName() {
 		BASE_NAME = "Owner";
 	}
 
 	@Override
-	public void SetInsert() {
-		// TODO Auto-generated method stub
+	public void setInsert() {
 		INSERT = "INSERT INTO "
 				+ TABLE
-				+ " (email_address, password) VALUES (?,?);";
+				+ " (version, email_address, password) VALUES (?,?,?);";
 	}
 
 	@Override
-	public void SetUpdate() {
-		// TODO Auto-generated method stub
+	public void setUpdate() {
 		UPDATE = "UPDATE "
 				+ TABLE
-				+ " AS p set p.password=? WHERE p.email_address=?;";
+				+ " AS p set p.version=p.version+1, p.password=? WHERE p.email_address=? AND p.version=?;";
 	}
 
 	@Override
-	public void SetDelete() {
-		// TODO Auto-generated method stub
-		DELETE = "DELETE p FROM " + TABLE + " AS p WHERE p.email_address=?;";
+	public void setDelete() {
+		DELETE = "DELETE FROM " + TABLE + " AS p WHERE p.email_address=? AND p.version=?;";
 	}
 
 	@Override
-	public void SetSelectAll() {
-		// TODO Auto-generated method stub
-		SELECT_ALL = "SELECT p.email_address, p.password FROM "
+	public void setSelectAll() {
+		SELECT_ALL = "SELECT p.version,p.email_address, p.password FROM "
 				+ TABLE + " AS p;";
 	}
 
 	@Override
-	public void SetSelect() {
-		// TODO Auto-generated method stub
-		SELECT = "SELECT p.email_address, p.password FROM "
+	public void setSelect() {
+		SELECT = "SELECT p.version, p.email_address, p.password FROM "
 				+ TABLE + " AS p WHERE p.email_address=?;";
 	}
 
+
 	@Override
 	public Object getObject(ResultSet rs) {
-		// TODO Auto-generated method stub
 		try {
 			if(rs.next()){
-				TDG Another = new PersonTDG();
-				Person ThePerson = (Person)Another.find(rs.getString("p.email_address"));
+				TDG tdg = new PersonTDG();
+				Person person = (Person)tdg.find(rs.getString("p.email_address"));
+				System.out.println("email: "+ rs.getString("p.email_address")+"\n");
+				System.out.println("email: "+ rs.getInt("p.version")+"\n");
 				Owner result = new Owner(
-				rs.getString("p.email_address"),
-				rs.getString("p.password"),
-				ThePerson.getFirstName(),
-				ThePerson.getLastName(),
-				ThePerson.getDOB(),
-				ThePerson.getPhoneNumber()
+						person.getId(),
+						person.getVersion(),
+						rs.getString("p.email_address"),
+						person.getFirstName(),
+						person.getLastName(),
+						person.getDOB(),
+						person.getPhoneNumber(),
+						rs.getInt("p.version"),
+						rs.getString("p.password")
 				);				
 				return result;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -89,7 +88,6 @@ public class OwnerTDG extends TDG{
 
 	@Override
 	public List<Object> getAllObject(ResultSet rs) {
-		// TODO Auto-generated method stub
 		List<Object> people = new ArrayList<Object>();
 		
 		try {
@@ -98,47 +96,72 @@ public class OwnerTDG extends TDG{
 				if(rs.previous());
 				Owner result = (Owner)getObject(rs);				
 				people.add(result);
-				
 			}
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return people;
 	}
 
 	@Override
-	public PreparedStatement FillInsert(Object Obj, PreparedStatement ps) {
-		// TODO Auto-generated method stub
-		Owner person = (Owner) Obj;
+	public PreparedStatement fillInsert(Object obj, PreparedStatement ps) {
+		Owner owner = (Owner) obj;
 		try {
-			TDG Another = new PersonTDG();
-			Another.insert(Obj);
-			ps.setString(1, person.getEmailAddress());
-			ps.setString(2, person.getpassword());
+			TDG tdg = new PersonTDG();
+			tdg.insert(obj);
+			ps.setInt(1, owner.getOwnerVersion() );
+			ps.setString(2, owner.getEmailAddress());
+			ps.setString(3, owner.getPassword());
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ps;
 	}
 
 	@Override
-	public PreparedStatement FillUpdate(Object Obj, PreparedStatement ps) {
-		// TODO Auto-generated method stub
-		Owner person = (Owner) Obj;
+	public PreparedStatement fillUpdate(Object obj, PreparedStatement ps) {
+		Owner owner = (Owner) obj;
 		try {
-			TDG Another = new PersonTDG();
-			Another.update(Obj);
-			ps.setString(1, person.getpassword());
-			ps.setString(2, person.getEmailAddress());
+			TDG tdg = new PersonTDG();
+			tdg.update(obj);
+			ps.setString(1, owner.getPassword());
+			ps.setString(2, owner.getEmailAddress());
+			ps.setInt(3,  owner.getOwnerVersion());
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ps;
 	}
+
+//	@Override
+//	public PreparedStatement fillSelect(Object objectId, PreparedStatement ps) {
+//		// TODO Auto-generated method stub
+//
+//		try {
+//			ps.setString(1, (String)objectId);
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return ps;
+//
+//
+//	}
+//
+//	@Override
+//	public PreparedStatement fillDelete(Object objectId, PreparedStatement ps) {
+//		// TODO Auto-generated method stub
+//		try {
+//			ps.setString(1, (String)objectId);
+//
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return ps;
+//
+//	}
 
 }

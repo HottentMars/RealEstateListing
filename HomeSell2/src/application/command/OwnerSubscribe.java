@@ -28,7 +28,7 @@ public class OwnerSubscribe extends FrontCommand {
 			Long phone = Long.parseLong(request.getParameter("Phone"));
 			String password = request.getParameter("Password");
 			
-			Owner aMember = new Owner(email,password,Fname,Lname,DOB,phone);
+			Owner aMember = new Owner(0,1,email,Fname,Lname,DOB,phone,1,password);
 			Mapper.insert(aMember, "Owner");
 			session.setAttribute("aMember", aMember);
 			request.setAttribute("aMember", aMember);

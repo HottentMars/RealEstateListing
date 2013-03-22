@@ -5,104 +5,96 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-
-public abstract class TDG {
+public abstract class TDG<T> {
 	protected String BASE_NAME = "";
-	protected String TABLE = MySQLConnection.getInstance().getTablePrefix()
-			+ BASE_NAME;
+	protected String TABLE = MySQLConnection.getInstance().getTablePrefix()	+ BASE_NAME;
 	protected String INSERT = "";
 	protected String UPDATE = "";
 	protected String DELETE = "";
-	
+
 	public static String SELECT_ALL = "";
 	public static String SELECT = "";
-	
-	public abstract void SetBaseName();
 
-	public abstract void SetInsert();
+	public abstract void setBaseName();
 
-	public abstract void SetUpdate();
+	public abstract void setInsert();
 
-	public abstract void SetDelete();
+	public abstract void setUpdate();
 
-	public abstract void SetSelectAll();
+	public abstract void setDelete();
 
-	public abstract void SetSelect();
+	public abstract void setSelectAll();
+
+	public abstract void setSelect();
 
 	public abstract Object getObject(ResultSet rs);
 
 	public abstract List<Object> getAllObject(ResultSet rs);
 
-	public abstract PreparedStatement FillInsert(Object Obj,
-			PreparedStatement ps);
+	public abstract PreparedStatement fillInsert(Object obj, PreparedStatement ps);
 
-	public abstract PreparedStatement FillUpdate(Object Obj,
-			PreparedStatement ps);
+	public abstract PreparedStatement fillUpdate(Object obj, PreparedStatement ps);
 
-	public void SetTable()
+	public void setTable() {
+		TABLE = MySQLConnection.getInstance().getTablePrefix() + BASE_NAME;
+	}
+
+	public PreparedStatement fillSelect(Object objectId, PreparedStatement ps) 
 	{
-	TABLE = MySQLConnection.getInstance().getTablePrefix() + BASE_NAME;
+		try {
+			
+			ps.setObject(1, objectId );
+			//ps.set
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ps;
 	}
-	
-	public PreparedStatement FillSelect(String ObjectId, PreparedStatement ps) {
+
+	public PreparedStatement fillDelete(Object objectId, PreparedStatement ps) {
 		// TODO Auto-generated method stub
-		//Person person = (Person) Obj;
 		try {
-			ps.setString(1, ObjectId);
-
+			ps.setObject(1, objectId);
+			//ps.setObject(, objectId);
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return ps;
-	}
-	
-	public PreparedStatement FillDelete(String ObjectId, PreparedStatement ps) {
-		//Person person = (Person) Obj;
-		try {
-			ps.setString(1, ObjectId);
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return ps;
 	}
+ 
 
 	public List<Object> findAll() throws SQLException {
-		PreparedStatement ps = MySQLConnection.getInstance().getConnection()
-				.prepareStatement(SELECT_ALL);
+		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(SELECT_ALL);
 		return getAllObject(ps.executeQuery());
 	}
 
-	public Object find(String ObjectId) throws SQLException {
-		PreparedStatement ps = MySQLConnection.getInstance().getConnection()
-				.prepareStatement(SELECT);
-		ps = FillSelect(ObjectId, ps);
+	public Object find(T objectId) throws SQLException {
+		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(SELECT);
+		ps = fillSelect(objectId, ps);
 		return getObject(ps.executeQuery());
 	}
 
-	public void insert(Object Obj) throws SQLException {
-		PreparedStatement ps = MySQLConnection.getInstance().getConnection()
-				.prepareStatement(INSERT);
-		ps = FillInsert(Obj, ps);
+	public void insert(Object obj) throws SQLException {
+		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(INSERT);
+		ps = fillInsert(obj, ps);
 		ps.executeUpdate();
 		ps.close();
 	}
 
-	public int update(Object Obj) throws SQLException {
-		PreparedStatement ps = MySQLConnection.getInstance().getConnection()
-				.prepareStatement(UPDATE);
-		ps = FillUpdate(Obj, ps);
+	public int update(Object obj) throws SQLException {
+		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(UPDATE);
+		ps = fillUpdate(obj, ps);
 		int count = ps.executeUpdate();
 		ps.close();
 		return count;
 	}
 
-	public int delete(String ObjectId) throws SQLException {
-		PreparedStatement ps = MySQLConnection.getInstance().getConnection()
-				.prepareStatement(DELETE);
-		ps = FillDelete(ObjectId, ps);
+	public int delete(T objectId) throws SQLException {
+		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(DELETE);
+		ps = fillDelete(objectId, ps);
 		int count = ps.executeUpdate();
 		ps.close();
 		return count;
