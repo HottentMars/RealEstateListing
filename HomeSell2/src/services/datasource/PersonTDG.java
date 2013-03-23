@@ -63,6 +63,7 @@ public class PersonTDG extends TDG {
 	public PreparedStatement fillInsert(Object obj, PreparedStatement ps) {
 		Person person = (Person) obj;
 		try {
+			// id automatically assigned by the DB
 			//ps.setLong(1, person.getId());
 			ps.setInt(1, person.getVersion());
 			ps.setString(2, person.getEmailAddress());
