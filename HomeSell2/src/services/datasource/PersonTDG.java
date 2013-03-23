@@ -22,8 +22,8 @@ public class PersonTDG extends TDG {
 		setSelectAll();
 		setSelect();
 	}
-//change persontdg
 // trying to mess up
+//change persontdg
 	@Override
 	public void setBaseName() {
 		BASE_NAME = "Person";
