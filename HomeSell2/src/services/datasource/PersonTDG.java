@@ -35,7 +35,7 @@ public class PersonTDG extends TDG {
 				+ TABLE
 				+ " (version, email_address, first_name, last_name, date_of_birth, phone_number) VALUES (?,?,?,?,?,?);";
 	}
-
+//ole!
 	@Override
 	public void setUpdate() {
 		UPDATE = "UPDATE "
