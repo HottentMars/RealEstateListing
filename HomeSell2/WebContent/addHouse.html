@@ -7,10 +7,32 @@
 <body>
 <h2>Enter house details</h2><br>
 <form action="BuddyAge?command=application.command.HouseAdd" method="post">
-	 Email Address: <input type="text" name="Email" /><br>
-	 Password:<input type="password" name="password" /><br>
-	<input type="submit" value = "submit" /><input type="button" name="cancel" value="Cancel" onClick="history.go(-1);return true;" /><br><br>
-	
+	<h3>address</h3>
+	 Street number <input type="text" name="civic_number" /><br>
+	 Street name <input type="text" name="street_name" /><br>
+	 City<select name="city">
+	 <option value="Montreal">Montreal</option>
+	 <option value="Laval">Laval</option>
+	 <option value="Longueil">Longueil</option>
+	 </select> <br>
+	 Postal code<input type="text" name="postal_code" /><br>
+	 <h3>House details</h3>
+	 Number of bedrooms<select name="bedroom_number">
+	 <option value="1">1</option>
+	 <option value="2">2</option>
+	 <option value="3">3</option>
+	 <option value="4">4</option>
+	 <option value="5">5</option>
+	 </select><br>
+	 Number of bathrooms<select name="bathroom_number">
+	 <option value="1">1</option>
+	 <option value="2">2</option>
+	 <option value="3">3</option>
+	 <option value="4">4</option>
+	 <option value="5">5</option>
+	 </select><br>
+	 Year of Construction<input type="text" name="YOC" /><br>	 
+	<input type="submit" value = "submit" /><input type="button" name="cancel" value="Cancel" onClick="history.go(-1);return true;" /><br>
 	</form> 
 </body>
 </html>

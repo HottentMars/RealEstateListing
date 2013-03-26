@@ -3,7 +3,7 @@ package domain.model.RealEstate;
 import java.sql.Date;
 
 public class RealEstate {
-	private String realestate_id;
+	private Long realestate_id;
 	private String owner_id;
 	private int civic_number;
 	private String street;
@@ -12,10 +12,12 @@ public class RealEstate {
 	private String postal_code;
 	private Date dateOC; 
 	private int total_area;
+	private int version;
 	
-	public RealEstate(String realestate_id, String owner_id, int civic_number, String street, String city, 
+	public RealEstate(Long realestate_id, int version, String owner_id, int civic_number, String street, String city, 
 			String province, String postal_code, Date dateOC, int total_area)
 	{
+		setVersion(version);
 		setRealestate_id(realestate_id);
 		setOwner_id(owner_id);
 		setCivic_number(civic_number);
@@ -25,10 +27,10 @@ public class RealEstate {
 		setPostal_code(postal_code);
 		setDateOC(dateOC);
 	}
-	public String getRealestate_id() {
+	public Long getRealestate_id() {
 		return realestate_id;
 	}
-	public void setRealestate_id(String realestate_id) {
+	public void setRealestate_id(Long realestate_id) {
 		this.realestate_id = realestate_id;
 	}
 	public String getOwner_id() {
@@ -78,6 +80,12 @@ public class RealEstate {
 	}
 	public void settotal_area(int total_area) {
 		this.total_area = total_area;
+	}
+	public int getVersion() {
+		return version;
+	}
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 }

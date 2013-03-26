@@ -3,114 +3,124 @@ package services.datasource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
-public class HouseTDG {
-	public static final String TABLE = "Listing";
-	
-	public static final String INSERT = "INSERT INTO " + TABLE + 
-					" (version, listingId, address, ownerId, price, yearOfConstruction, lotSize," +
-					" totalLivingArea, heating, cooling, garage, driveway, drivewayCars, siding," +
-					" windowType, yard, garden, additionalNotes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-	
-	public static final String UPDATE = "UPDATE " + TABLE + 
-					" AS h set h.version=h.version+1, h.listingId=?, h.address=?, h.ownerId=?, h.price=?," +
-					" h.yearOfConstruction=?, h.lotSize=?, h.totalLivingArea=?, h.heating=?, h.cooling=?," +
-					" h.garage=?, h.driveway=?, h.drivewayCars=?, h.siding=?, h.windowType=?, h.yard=?," +
-					" h.garden=?, h.additionalNotes=?" +
-					"WHERE h.version=? AND h.listingId=?;";
-	
-	public static final String DELETE = "DELETE FROM " + TABLE + " AS h WHERE h.version=? AND h.listingId=?;";
-	
-	public static final String SELECT_ALL = "SELECT h.version, h.listingId, h.address, h.ownerId, h.price," +
-					" h.yearOfConstruction, h.lotSize, h.totalLivingArea, h.heating, h.cooling," +
-					" h.garage, h.driveway, h.drivewayCars, h.siding, h.windowType, h.yard," +
-					" h.garden, h.additionalNotes FROM " + TABLE + " AS h;";
-	
-	public static final String SELECT = "SELECT h.version, h.listingId, h.address, h.ownerId, h.price," +
-					" h.yearOfConstruction, h.lotSize, h.totalLivingArea, h.heating, h.cooling," +
-					" h.garage, h.driveway, h.drivewayCars, h.siding, h.windowType, h.yard," +
-					" h.garden, h.additionalNotes FROM " + TABLE + " AS h WHERE h.listingId=?;";
-	
-	public static ResultSet findAll() throws SQLException {
-		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(SELECT_ALL);
-		return ps.executeQuery();
+import domain.model.RealEstate.House;
+import domain.model.RealEstate.RealEstate;
+
+public class HouseTDG extends TDG{
+
+	public HouseTDG()
+	{
+		setBaseName();
+		setTable();
+		setInsert();
+		setUpdate();
+		setDelete();
+		setSelectAll();
+		setSelect();
 	}
 	
-	public static ResultSet find(long listingId) throws SQLException {
-		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(SELECT);
-		ps.setLong(1, listingId);
-		return ps.executeQuery();
-	}
-	
-	public static void insert(int version, long listingId, String address, int ownerId, int price, int yearOfConstruction,
-			int lotSize, int totalLivingArea, String heating, boolean cooling, String garage, String driveway,
-			int drivewayCars, String siding, String windowType, boolean yard, boolean garden, String notes) throws SQLException {
-		
-		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(INSERT);
-		
-		ps.setInt(1, version);
-		ps.setLong(2, listingId);
-		ps.setString(3, address);
-		ps.setInt(4, ownerId);
-		ps.setInt(5, price);
-		ps.setInt(6, yearOfConstruction);
-		ps.setInt(7, lotSize);
-		ps.setInt(8, totalLivingArea);
-		ps.setString(9, heating);
-		ps.setBoolean(10, cooling);
-		ps.setString(11, garage);
-		ps.setString(12, driveway);
-		ps.setInt(13, drivewayCars);
-		ps.setString(14, siding);
-		ps.setString(15, windowType);
-		ps.setBoolean(16, yard);
-		ps.setBoolean(17, garden);
-		ps.setString(18, notes);
-		
-		ps.executeUpdate();
-		ps.close();
+	@Override
+	public void setBaseName() {
+		// TODO Auto-generated method stub
+		BASE_NAME = "House";
 	}
 
-	public static int update(int version, long listingId, String address, int ownerId, int price, int yearOfConstruction,
-			int lotSize, int totalLivingArea, String heating, boolean cooling, String garage, String driveway,
-			int drivewayCars, String siding, String windowType, boolean yard, boolean garden, String notes) throws SQLException {
-		
-		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(UPDATE); 
-		
-		ps.setInt(1, version);
-		ps.setLong(2, listingId);
-		ps.setString(3, address);
-		ps.setInt(4, ownerId);
-		ps.setInt(5, price);
-		ps.setInt(6, yearOfConstruction);
-		ps.setInt(7, lotSize);
-		ps.setInt(8, totalLivingArea);
-		ps.setString(9, heating);
-		ps.setBoolean(10, cooling);
-		ps.setString(11, garage);
-		ps.setString(12, driveway);
-		ps.setInt(13, drivewayCars);
-		ps.setString(14, siding);
-		ps.setString(15, windowType);
-		ps.setBoolean(16, yard);
-		ps.setBoolean(17, garden);
-		ps.setString(18, notes);
-		
-		int count = ps.executeUpdate();
-		ps.close();
-		return count;
+	@Override
+	public void setInsert() {
+		// TODO Auto-generated method stub
+		INSERT = "INSERT INTO "
+				+ TABLE
+				+ " (house_id,version, backyard_size) " +
+				"VALUES (?,?,?);";
 	}
 
-	public static int delete(int version, long listingId) throws SQLException {
-		
-		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(DELETE); 
-		
-		ps.setInt(1, version);
-		ps.setLong(2, listingId);
-		
-		int count = ps.executeUpdate();
-		ps.close();
-		return count;
+	@Override
+	public void setUpdate() {
+		// TODO Auto-generated method stub
+		UPDATE = "UPDATE "
+				+ TABLE
+				+ " AS p set p.version=p.version+1, p.backyard_size=? WHERE p.house_id=? AND p.version=?;";
 	}
 
+	@Override
+	public void setDelete() {
+		// TODO Auto-generated method stub
+		DELETE = "DELETE FROM " + TABLE + " AS p WHERE p.house_id=? AND p.version=?;";
+	}
+
+	@Override
+	public void setSelectAll() {
+		// TODO Auto-generated method stub
+		SELECT_ALL = "SELECT * FROM "
+				+ TABLE + ";";
+	}
+
+	@Override
+	public void setSelect() {
+		// TODO Auto-generated method stub
+		SELECT="SELECT * FROM "
+				+ TABLE + "As p Where p.house_id=?;";
+	}
+
+	@Override
+	public Object getObject(ResultSet rs) {
+		// TODO Auto-generated method stub
+		try {
+			if (rs.next()) {
+//				House result = new House(
+//						rs.getLong("p.id"),
+//						rs.getInt("p.version"),
+//						rs.getString("p.email_address"),
+//						rs.getInt("p.civic_number"),
+//						rs.getString("p.street"),
+//						rs.getString("p.city"),
+//						rs.getString("p.province"),
+//						rs.getString("p.postal_code"),
+//						rs.getDate("p.date_of_construction"),
+//						rs.getInt("p.total_area"));
+//				return result;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List getAllObject(ResultSet rs) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PreparedStatement fillInsert(Object obj, PreparedStatement ps) {
+		// TODO Auto-generated method stub
+		House house = (House) obj;
+		try {
+			ps.setLong(1,house.getRealestate_id());
+			ps.setInt(2,house.getVersion());
+			ps.setInt(3, house.getBackyard_size());
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ps;
+	}
+
+	@Override
+	public PreparedStatement fillUpdate(Object obj, PreparedStatement ps) {
+		// TODO Auto-generated method stub
+		House house = (House) obj;
+		try {
+			ps.setInt(1, house.getBackyard_size());
+			ps.setLong(2,house.getRealestate_id());
+			ps.setInt(3,house.getVersion());
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ps;
+	}
 }

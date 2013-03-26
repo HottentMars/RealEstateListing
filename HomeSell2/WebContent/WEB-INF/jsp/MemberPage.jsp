@@ -20,5 +20,6 @@ Welcome <%= mperson.getFirstName()%> <%= mperson.getLastName()%> (<a href="Buddy
 <br><a href="BuddyAge?command=application.command.OwnerUnsubscribe">Unsubscribe</a>
 <br><a href="BuddyAge?command=application.command.OwnerProfileInformation">Update profile information</a>
 <br><a href="index.html">Menu</a><br>
+<a href="addHouse.html">Add House</a><br>
 </body>
 </html>

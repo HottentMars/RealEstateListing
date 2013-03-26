@@ -8,7 +8,7 @@ import java.util.List;
 //import javax.servlet.http.HttpSession;
 import services.datasource.TDG;
 
-public class Mapper<T> {
+public class Mapper {
 	
 	private static TDG ThatTDG;
 	

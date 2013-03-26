@@ -3,7 +3,10 @@ package services.datasource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+
+import domain.model.RealEstate.Generatedkeymap;
 
 public abstract class TDG<T> {
 	protected String BASE_NAME = "";
@@ -78,9 +81,12 @@ public abstract class TDG<T> {
 	}
 
 	public void insert(Object obj) throws SQLException {
-		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(INSERT);
+		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);
 		ps = fillInsert(obj, ps);
 		ps.executeUpdate();
+		ResultSet rs = ps.getGeneratedKeys();
+		if(rs.next())
+			Generatedkeymap.getInstance().put(1, (Long)rs.getLong(1));//getting generated keys
 		ps.close();
 	}
 

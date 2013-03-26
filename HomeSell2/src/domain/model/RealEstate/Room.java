@@ -1,17 +1,19 @@
 package domain.model.RealEstate;
 
 public class Room {
-	private long room_id;
-	private String ree_id;
+	private Long room_id;
+	private Long ree_id;
 	private String room_type;
 	private int size;
+	private int version;
 	
-	public Room(long room_id, String ree_id, String room_type, int size)
+	public Room(Long room_id,int version, Long ree_id, String room_type, int size)
 	{
-		setRoom_id(room_id);
-		setRee_id(ree_id);
-		setRoom_type(room_type);
-		setSize(size);
+		this.room_id=room_id;
+		this.version=version;
+		this.ree_id=ree_id;
+		this.room_type=room_type;
+		this.size=size;
 	}
 	
 	public long getRoom_id() {
@@ -20,10 +22,10 @@ public class Room {
 	public void setRoom_id(long room_id) {
 		this.room_id = room_id;
 	}
-	public String getRee_id() {
+	public Long getRee_id() {
 		return ree_id;
 	}
-	public void setRee_id(String ree_id) {
+	public void setRee_id(Long ree_id) {
 		this.ree_id = ree_id;
 	}
 	public String getRoom_type() {
@@ -37,5 +39,13 @@ public class Room {
 	}
 	public void setSize(int size) {
 		this.size = size;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 }
