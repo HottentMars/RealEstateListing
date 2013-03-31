@@ -16,10 +16,10 @@ String warning = (String)request.getAttribute("warning");
 <% if(warning != null) { %><b>Warning: </b> <%=warning %><br/> <% } %>
 Welcome <%= mperson.getFirstName()%> <%= mperson.getLastName()%> (<a href="BuddyAge?command=application.command.OwnerLogout">Logout</a>)
 <%request.setAttribute("mperson", mperson); %>
-
+<br><a href="BuddyAge?command=application.command.HouseView">View your House(s)</a>
+<br><a href="BuddyAge?command=application.command.OwnerProfileInformation">Update your profile</a>
 <br><a href="BuddyAge?command=application.command.OwnerUnsubscribe">Unsubscribe</a>
-<br><a href="BuddyAge?command=application.command.OwnerProfileInformation">Update profile information</a>
-<br><a href="index.html">Menu</a><br>
-<a href="addHouse.html">Add House</a><br>
+<br><a href="index.html">Home page</a><br>
+
 </body>
 </html>

@@ -5,6 +5,8 @@ package domain.model.mapper;
 import java.sql.SQLException;
 import java.util.List;
 
+import domain.model.RealEstate.RealEstate;
+
 //import javax.servlet.http.HttpSession;
 import services.datasource.TDG;
 
@@ -61,5 +63,16 @@ public class Mapper {
 	public static TDG ReturnTDGInstance(String TheClassName) throws InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
 		return (TDG)Class.forName("services.datasource."+TheClassName+"TDG").newInstance();
+	}
+
+	public static List<Object> advancedSearch(List<String> search,
+			String TheClassName) throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		List<Object> Alist = null;//PersonIdentityMap.getInstance().get(id);
+		ThatTDG = ReturnTDGInstance(TheClassName);
+		if ( Alist == null ){
+			Alist = ThatTDG.advancedSearch(search);						
+		}
+		return Alist;
 	}
 }

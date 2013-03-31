@@ -20,10 +20,10 @@ public class OwnerUpdate extends FrontCommand {
 		session = request.getSession();
 		Owner aMember= (Owner) session.getAttribute("aMember");
 		//String email = request.getParameter("Email");
-		aMember.setFirstName(request.getParameter("Fname"));
-		aMember.setLastName(request.getParameter("Lname"));
-		aMember.setDOB( Date.valueOf(request.getParameter("DOB")) ) ;
-		aMember.setPhoneNumber(Long.parseLong(request.getParameter("Phone")));
+		aMember.setFirstName(request.getParameter("V1"));//Fname
+		aMember.setLastName(request.getParameter("V2"));//Lname
+		aMember.setDOB( Date.valueOf(request.getParameter("V3")) ) ;//DOB
+		aMember.setPhoneNumber(Long.parseLong(request.getParameter("V4")));//Phone
 		
 		
 		//Owner aMember = new Person(email,Fname,Lname,DOB,phone);

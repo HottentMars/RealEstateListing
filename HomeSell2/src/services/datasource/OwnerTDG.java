@@ -1,6 +1,6 @@
 package services.datasource;
 
-import java.sql.Date;
+//import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -135,33 +135,5 @@ public class OwnerTDG extends TDG{
 		}
 		return ps;
 	}
-
-//	@Override
-//	public PreparedStatement fillSelect(Object objectId, PreparedStatement ps) {
-//		// TODO Auto-generated method stub
-//
-//		try {
-//			ps.setString(1, (String)objectId);
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return ps;
-//
-//
-//	}
-//
-//	@Override
-//	public PreparedStatement fillDelete(Object objectId, PreparedStatement ps) {
-//		// TODO Auto-generated method stub
-//		try {
-//			ps.setString(1, (String)objectId);
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return ps;
-//
-//	}
 
 }

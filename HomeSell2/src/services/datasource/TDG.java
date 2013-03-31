@@ -4,11 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
 import java.util.List;
 
 import domain.model.RealEstate.Generatedkeymap;
 
-public abstract class TDG<T> {
+public abstract class TDG {
 	protected String BASE_NAME = "";
 	protected String TABLE = MySQLConnection.getInstance().getTablePrefix()	+ BASE_NAME;
 	protected String INSERT = "";
@@ -17,6 +18,7 @@ public abstract class TDG<T> {
 
 	public static String SELECT_ALL = "";
 	public static String SELECT = "";
+	public static String AdvancedSELECT = "";
 
 	public abstract void setBaseName();
 
@@ -74,7 +76,7 @@ public abstract class TDG<T> {
 		return getAllObject(ps.executeQuery());
 	}
 
-	public Object find(T objectId) throws SQLException {
+	public Object find(Object objectId) throws SQLException {
 		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(SELECT);
 		ps = fillSelect(objectId, ps);
 		return getObject(ps.executeQuery());
@@ -98,11 +100,35 @@ public abstract class TDG<T> {
 		return count;
 	}
 
-	public int delete(T objectId) throws SQLException {
+	public int delete(Object objectId) throws SQLException {
 		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(DELETE);
 		ps = fillDelete(objectId, ps);
 		int count = ps.executeUpdate();
 		ps.close();
 		return count;
+	}
+	
+	public void fillAdvancedSearchSelect(List<String> search)
+	{
+		Iterator it = search.iterator();
+		AdvancedSELECT = "Select * from "+TABLE+" As p Where ";
+		String Iteration = null;
+		if(it.hasNext())
+		{
+			Iteration = (String)it.next();
+		}
+		while(it.hasNext())
+		{
+			Iteration += " And ";
+			Iteration += (String)it.next();
+			
+		}
+		AdvancedSELECT += Iteration+";";
+	}
+	public List<Object> advancedSearch(List<String> search) throws SQLException {
+		// TODO Auto-generated method stub
+		fillAdvancedSearchSelect(search);
+		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(AdvancedSELECT);
+		return (List<Object>) getObject(ps.executeQuery());
 	}
 }

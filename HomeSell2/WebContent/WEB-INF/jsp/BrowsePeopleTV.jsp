@@ -18,6 +18,6 @@ for(Person person: people) {
 <%= person.getFirstName()%> <%=person.getLastName() %><br/>
 <% } %>
 
-<a href="index.html">Menu</a><br>
+<a href="index.html">Home</a><br>
 </body>
 </html>

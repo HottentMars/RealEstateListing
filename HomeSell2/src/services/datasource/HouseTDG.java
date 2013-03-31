@@ -3,10 +3,13 @@ package services.datasource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import domain.model.RealEstate.House;
 import domain.model.RealEstate.RealEstate;
+import domain.model.person.Person;
 
 public class HouseTDG extends TDG{
 
@@ -61,27 +64,36 @@ public class HouseTDG extends TDG{
 	public void setSelect() {
 		// TODO Auto-generated method stub
 		SELECT="SELECT * FROM "
-				+ TABLE + "As p Where p.house_id=?;";
+				+ TABLE + " As p Where  p.house_id=?;";
 	}
 
 	@Override
 	public Object getObject(ResultSet rs) {
 		// TODO Auto-generated method stub
+		
 		try {
-			if (rs.next()) {
-//				House result = new House(
-//						rs.getLong("p.id"),
-//						rs.getInt("p.version"),
-//						rs.getString("p.email_address"),
-//						rs.getInt("p.civic_number"),
-//						rs.getString("p.street"),
-//						rs.getString("p.city"),
-//						rs.getString("p.province"),
-//						rs.getString("p.postal_code"),
-//						rs.getDate("p.date_of_construction"),
-//						rs.getInt("p.total_area"));
-//				return result;
+			List<House> owners_house = new ArrayList<House>();
+			TDG tdg = new RealEstateTDG();
+			
+			while (rs.next()) {
+				List<RealEstate> realList = (List<RealEstate>)tdg.find(rs.getLong("p.house_id"));
+				Iterator it = realList.iterator();
+				RealEstate real = (RealEstate)it.next();
+				House result = new House(
+						rs.getLong("p.house_id"),
+						rs.getInt("p.version"),
+						real.getOwner_id(),
+						real.getCivic_number(),
+						real.getStreet(),
+						real.getCity(),
+						real.getProvince(),
+						real.getPostal_code(),
+						real.getDateOC(),
+						real.gettotal_area(),
+						rs.getInt("p.backyard_size"));
+				owners_house.add(result); 
 			}
+			return owners_house;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
