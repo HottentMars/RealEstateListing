@@ -18,10 +18,12 @@
     <display-name>FrontController</display-name>
     <servlet-name>FrontController</servlet-name>
     <servlet-class>application.FrontController</servlet-class>
+    
   	</servlet>
   	
   	<servlet-mapping>
     <servlet-name>FrontController</servlet-name>
     <url-pattern>/BuddyAge</url-pattern>
   	</servlet-mapping>
+  	
 </web-app>

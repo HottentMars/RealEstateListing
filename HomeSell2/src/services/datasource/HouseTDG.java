@@ -90,6 +90,8 @@ public class HouseTDG extends TDG{
 						real.getPostal_code(),
 						real.getDateOC(),
 						real.gettotal_area(),
+						real.getProfile_pic(),
+						real.getPrice(),
 						rs.getInt("p.backyard_size"));
 				owners_house.add(result); 
 			}

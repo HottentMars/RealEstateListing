@@ -13,19 +13,23 @@ public class RealEstate {
 	private Date dateOC; 
 	private int total_area;
 	private int version;
+	private String profile_pic;
+	private Long price;
 	
 	public RealEstate(Long realestate_id, int version, String owner_id, int civic_number, String street, String city, 
-			String province, String postal_code, Date dateOC, int total_area)
+			String province, String postal_code, Date dateOC, int total_area, String profile_pic, Long price)
 	{
-		setVersion(version);
-		setRealestate_id(realestate_id);
-		setOwner_id(owner_id);
-		setCivic_number(civic_number);
-		setStreet(street);
-		setCity(city);
-		setProvince(province);
-		setPostal_code(postal_code);
-		setDateOC(dateOC);
+		this.version =version;
+		this.realestate_id=realestate_id;
+		this.owner_id=owner_id; 
+		this.civic_number=civic_number;
+		this.street=street;
+		this.city=city;
+		this.province=province;
+		this.postal_code=postal_code;
+		this.dateOC=dateOC;
+		this.profile_pic=profile_pic;
+		this.price=price;
 	}
 	public Long getRealestate_id() {
 		return realestate_id;
@@ -86,6 +90,18 @@ public class RealEstate {
 	}
 	public void setVersion(int version) {
 		this.version = version;
+	}
+	public String getProfile_pic() {
+		return profile_pic;
+	}
+	public void setProfile_pic(String profile_pic) {
+		this.profile_pic = profile_pic;
+	}
+	public Long getPrice() {
+		return price;
+	}
+	public void setPrice(Long price) {
+		this.price = price;
 	}
 
 }

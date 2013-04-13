@@ -73,7 +73,8 @@ public abstract class TDG {
 
 	public List<Object> findAll() throws SQLException {
 		PreparedStatement ps = MySQLConnection.getInstance().getConnection().prepareStatement(SELECT_ALL);
-		return getAllObject(ps.executeQuery());
+//		return getAllObject(ps.executeQuery());
+		return (List<Object>) getObject(ps.executeQuery());
 	}
 
 	public Object find(Object objectId) throws SQLException {

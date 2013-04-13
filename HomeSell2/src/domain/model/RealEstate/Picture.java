@@ -2,6 +2,7 @@ package domain.model.RealEstate;
 
 public class Picture {
 	private Long pic_id;
+	private int version;
 	private Long ree_id;
 	private String name;
 	private String format; //jpeg, png, etc
@@ -11,10 +12,11 @@ public class Picture {
 	private int height;
 	private String directory_location;
 	
-	public Picture(Long pic_id, Long ree_id, String name, String format, String description, int size,
+	public Picture(Long pic_id,int version, Long ree_id, String name, String format, String description, int size,
 			int width, int height, String directory_location)
 	{
 		setPic_id(pic_id);
+		setVersion(version);
 		setRee_id(ree_id);
 		setName(name);
 		setFormat(format);
@@ -78,5 +80,13 @@ public class Picture {
 	}
 	public void setDirectory_location(String directory_location) {
 		this.directory_location = directory_location;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 }

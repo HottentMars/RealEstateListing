@@ -16,8 +16,8 @@ public class OwnerLogin extends FrontCommand {
 	}
 	//ownerlogin test 6
 	public String execute(HttpServletRequest request) {
-		session = request.getSession();
-		System.out.println("The session id is: "+session.getId());
+		
+		//System.out.println("The session id is: "+session.getId());
 		String email = request.getParameter("Email");
 		// String pass = request.getParameter("Password");
 		Owner aMember = null;//= new Person(email, null, null, null, 0);
@@ -32,6 +32,7 @@ public class OwnerLogin extends FrontCommand {
 		//String password = request.getParameter("password");
 		if(aMember.getPassword().equals(request.getParameter("password")))
 		{
+			session = request.getSession();
 			session.setAttribute("aMember", aMember);
 			request.setAttribute("aMember", aMember);
 			return "/WEB-INF/jsp/MemberPage.jsp";

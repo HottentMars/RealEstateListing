@@ -1,38 +1,130 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Add House</title>
+<meta name="description" content="website description" />
+<meta name="keywords" content="website keywords, website keywords" />
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<link rel="stylesheet" type="text/css" id="theme" href="css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
+<title>Home Sell</title>
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/base/jquery-ui.css" type="text/css" media="all" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js"
+        type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $('#txtDate').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1900:2013',
+                dateFormat:'yy-mm-dd'
+            });
+        });
+
+    </script>
 </head>
 <body>
-<h2>Enter house details</h2><br>
-<form action="BuddyAge?command=application.command.HouseAdd" method="post">
-	<h3>address</h3>
-	 Street number <input type="text" name="civic_number" /><br>
-	 Street name <input type="text" name="street_name" /><br>
-	 City<select name="city">
-	 <option value="Montreal">Montreal</option>
-	 <option value="Laval">Laval</option>
-	 <option value="Longueil">Longueil</option>
-	 </select> <br>
-	 Postal code<input type="text" name="postal_code" /><br>
-	 <h3>House details</h3>
-	 Number of bedrooms<select name="bedroom_number">
-	 <option value="1">1</option>
-	 <option value="2">2</option>
-	 <option value="3">3</option>
-	 <option value="4">4</option>
-	 <option value="5">5</option>
-	 </select><br>
-	 Number of bathrooms<select name="bathroom_number">
-	 <option value="1">1</option>
-	 <option value="2">2</option>
-	 <option value="3">3</option>
-	 <option value="4">4</option>
-	 <option value="5">5</option>
-	 </select><br>
-	 Year of Construction<input type="text" name="YOC" /><br>	 
-	<input type="submit" value = "submit" /><input type="button" name="cancel" value="Cancel" onClick="history.go(-1);return true;" /><br>
-	</form> 
+<div id="main">
+		<header>
+			<div id="logo">
+		        <div id="logo_text">
+		          <!-- class="logo_colour", allows you to change the colour of the text -->
+		          <h1><a href="index.html">Real Estate<span class="logo_colour">Listings</span></a></h1>
+		          <h2>Add listing, photos, with more details.</h2>
+		        </div>
+		        <form method="post" action="#" id="search">
+		          <input class="search" type="text" name="search_field" value="search....." onclick="javascript: document.forms['search'].search_field.value=''" />
+		          <input name="search" type="image" style="float: right;border: 0; margin: 20px 0 0 0;" src="images/search.png" alt="search" title="search" />
+		        </form>
+	      	</div>
+	      	<nav>
+		      	<ul class="sf-menu" id="nav">
+	          		<li ><a href="index.html">Home</a></li>
+		          	<li><a href="#">listings</a></li>
+		          	<li class="current"><a href="BuddyAge?command=application.command.SessionCheck">Member area</a>
+				        <ul>
+				           <li><a href="BuddyAge?command=application.command.HouseView">View your house(s)</a></li>
+				           <li><a href="BuddyAge?command=application.command.InsertHouse">Add House</a></li>
+				           <li><a href="BuddyAge?command=application.command.OwnerProfileInformation">Member Profile</a></li>
+				        </ul>
+			        </li>
+	          		<li><a href="#">Contact Us</a></li>
+	        	</ul>
+<!-- 				<a href="subscribe.html">Subscribe</a><br> -->
+<!-- 				<a href="login.html">Login</a><br> -->
+<!-- 				<a href="BuddyAge?command=application.command.BrowsePeople">BrowsePeople</a><br> -->
+			</nav><!-- END of nav -->
+		</header><!-- END of header -->
+	    <div id="site_content">
+      <div id="sidebar_container">
+        <div class="sidebar">
+          <h3>Latest News</h3>
+          <div class="sidebar_item">
+            <!-- insert your sidebar items here -->
+            <h4>New Website Launched</h4>
+            <h5>January 1st, 2012</h5>
+            <p>2012 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
+          </div>
+          <div class="sidebar_base"></div>
+        </div>
+      </div>
+      <div class="content">
+        <h1>Enter house details</h1>
+        <div class="content_item">
+        	<div class="form_settings">
+					<form action="BuddyAge?command=application.command.HouseAdd" method="post" enctype="multipart/form-data">
+						
+						 <p><span>Street number</span> <input type="text" name="civic_number" /></p><br>
+						 <p><span>Street name</span> <input type="text" name="street_name" /></p><br>
+						 <p><span>City</span><select name="city">
+						 <option value="Montreal">Montreal</option>
+						 <option value="Laval">Laval</option>
+						 <option value="Longueil">Longueil</option>
+						 </select> </p><br>
+						 <p><span>Postal code</span><input type="text" name="postal_code" /></p><br>
+						 
+						 <p><span>Number of bedrooms</span><select name="bedroom_number">
+						 <option value="1">1</option>
+						 <option value="2">2</option>
+						 <option value="3">3</option>
+						 <option value="4">4</option>
+						 <option value="5">5</option>
+						 </select></p><br>
+						 <p><span>Number of bathrooms</span><select name="bathroom_number">
+						 <option value="1">1</option>
+						 <option value="2">2</option>
+						 <option value="3">3</option>
+						 <option value="4">4</option>
+						 <option value="5">5</option>
+						 </select></p><br>
+						 <p><span>Price</span> <input type="text" name="price" /></p><br>
+						 <p><span>profile picture</span> <input type="file" name="picture" id="file"/></p><br>
+						 <p><span>Year of Construction</span><input type="text" name="YOC" id="txtDate"/></p><br>	 
+						<input class="submit" type="submit" value = "submit" /><input class="submit" type="button" name="cancel" value="Cancel" onClick="history.go(-1);return true;" /><br>
+					</form> 
+			</div>
+        </div>
+      </div>
+      
+    </div>
+    <footer>
+      <p><a href="index.html">Home</a> | <a href="#">Listings</a> | <a href="BuddyAge?command=application.command.SessionCheck">Member area</a> | <a href="#">Contact Us</a></p>
+<!--       <p>Copyright &copy; CSS3_one | <a href="http://www.css3templates.co.uk">design from css3templates.co.uk</a></p> -->
+    </footer>
+  </div>
+  <!-- javascript at the bottom for fast page loading -->
+<!--   <script type="text/javascript" src="js/jquery.js"></script> -->
+<!--   <script type="text/javascript" src="js/jquery.easing-sooper.js"></script> -->
+<!--   <script type="text/javascript" src="js/jquery.sooperfish.js"></script> -->
+<!--   <script type="text/javascript"> -->
+<!--     $(document).ready(function() { -->
+<!--       $('ul.sf-menu').sooperfish(); -->
+<!--     }); -->
+<!--   </script> -->
+
 </body>
 </html>

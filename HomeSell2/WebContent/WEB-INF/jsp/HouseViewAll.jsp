@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="domain.model.person.Owner"%>
+<%@page import="domain.model.RealEstate.RealEstate"%>
 <%@page import="java.util.List"%>
-<!DOCTYPE HTML>
+<%@page session="false"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta name="description" content="website description" />
@@ -31,8 +32,8 @@
 	      	<nav>
 		      	<ul class="sf-menu" id="nav">
 	          		<li ><a href="index.html">Home</a></li>
-		          	<li><a href="#">listings</a></li>
-		          	<li class="current"><a href="BuddyAge?command=application.command.SessionCheck">Member area</a>
+		          	<li class="current"><a href="BuddyAge?command=application.command.HouseViewAll">listings</a></li>
+		          	<li><a href="BuddyAge?command=application.command.SessionCheck">Member area</a>
 				        <ul>
 				           <li><a href="BuddyAge?command=application.command.HouseView">View your house(s)</a></li>
 				           <li><a href="BuddyAge?command=application.command.InsertHouse">Add House</a></li>
@@ -60,21 +61,24 @@
         </div>
       </div>
       <div class="content">
-        <h1>Member Area</h1>
+        <h1>Listings</h1>
         <div class="content_item">
-          	<%
-			Owner mperson = (Owner)request.getAttribute("aMember");
-			String warning = (String)request.getAttribute("warning");
-			%>
-			<% if(warning != null) { %><b>Warning: </b> <%=warning %><br/> <% } %>
-			Welcome <%= mperson.getFirstName()%> <%= mperson.getLastName()%> (<a href="BuddyAge?command=application.command.OwnerLogout">Logout</a>)
-			<%request.setAttribute("mperson", mperson); %>
-			<br><a href="BuddyAge?command=application.command.HouseView">View your House(s)</a>
-			<br><a href="BuddyAge?command=application.command.OwnerProfileInformation">Update your profile</a>
-			<br><a href="BuddyAge?command=application.command.OwnerUnsubscribe">Unsubscribe</a>
-        </div>
+           	
+			<% List<RealEstate> ReeList= (List<RealEstate>)request.getAttribute("ReeList");%>
+			<% String warning = (String)request.getAttribute("warning");%>
+
+ 			<% for(RealEstate ree: ReeList) {%>   
+				<div class="img">
+				 <a target="_blank" href="#"><img src="#" alt="House" width="110" height="90"></a>
+				 <div class="desc">$ 
+				 <%= ree.getPrice()%> 
+				</div>
+				</div>
+			<% } %>
+        
       </div>
       
+    </div>
     </div>
     <footer>
 <p><a href="index.html">Home</a> | <a href="#">Listings</a> | <a href="BuddyAge?command=application.command.SessionCheck">Member area</a> | <a href="#">Contact Us</a></p>
@@ -90,5 +94,6 @@
       $('ul.sf-menu').sooperfish();
     });
   </script>
+</body>
 </body>
 </html>

@@ -21,30 +21,38 @@ public class HouseView extends FrontCommand {
     }
 
 	public String execute(HttpServletRequest request) {
-		session = request.getSession();
-		Owner aMember= (Owner) session.getAttribute("aMember");//Get the current session
-		
-		List<String> Search = new ArrayList<String>();
-		Search.add("p.email_address = "+"'"+aMember.getEmailAddress()+"'");
-		try {
-			List<RealEstate> member_house;// = (List<House>)Mapper.find(aMember.getEmailAddress(), "House");
-			member_house = (List<RealEstate>)(List<?>)Mapper.advancedSearch(Search,"RealEstate");
-			session.setAttribute("member_house", member_house);
-			request.setAttribute("member_house", member_house);
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		session = request.getSession(false);
+		if(session==null)
+		{
+			return "login.html";
 		}
-		return "/WEB-INF/jsp/HouseView.jsp";
+		else
+		{
+			session = request.getSession();
+			Owner aMember= (Owner) session.getAttribute("aMember");//Get the current session
+			
+			List<String> Search = new ArrayList<String>();
+			Search.add("p.email_address = "+"'"+aMember.getEmailAddress()+"'");
+			try {
+				List<RealEstate> member_house;// = (List<House>)Mapper.find(aMember.getEmailAddress(), "House");
+				member_house = (List<RealEstate>)(List<?>)Mapper.advancedSearch(Search,"RealEstate");
+				session.setAttribute("member_house", member_house);
+				request.setAttribute("member_house", member_house);
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "/WEB-INF/jsp/HouseView.jsp";
+		}
 	}
 
 }

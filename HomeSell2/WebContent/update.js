@@ -1,5 +1,6 @@
 function start() {
-myform.V1.disabled = true; 
+myform.V1.disabled = true;
+
 myform.V2.disabled = true;
 myform.V3.disabled = true;
 myform.V4.disabled = true;
@@ -9,7 +10,8 @@ myform.V5.disabled = true;
 onload = start;
 
 function chgtx1() {
-myform.V1.disabled  = !myform.cb1.checked;}
+myform.V1.disabled  = !myform.cb1.checked;
+}
 
 function chgtx2() {
 myform.V2.disabled = !myform.cb2.checked;

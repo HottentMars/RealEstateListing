@@ -33,8 +33,9 @@ public class RealEstateTDG extends TDG{
 		// TODO Auto-generated method stub
 		INSERT = "INSERT INTO "
 				+ TABLE
-				+ " (version, email_address, civic_number,street,city,province,postal_code,date_of_construction,total_area) " +
-				"VALUES (?,?,?,?,?,?,?,?,?);";
+				+ " (version, email_address, civic_number,street,city,province,postal_code,date_of_construction,total_area, profile_pic," +
+				"price) " +
+				"VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 	}
 
 	@Override
@@ -42,7 +43,8 @@ public class RealEstateTDG extends TDG{
 		// TODO Auto-generated method stub
 		UPDATE = "UPDATE "
 				+ TABLE
-				+ " AS p set p.version=p.version+1, p.civic_number=?, p.street=?, p.city=? WHERE p.ree_id=?;";
+				+ " AS p set p.version=p.version+1, p.civic_number=?, p.street=?, p.city=?, p.profile_pic," +
+				"p.price WHERE p.ree_id=?;";
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class RealEstateTDG extends TDG{
 	public void setSelectAll() {
 		// TODO Auto-generated method stub
 		SELECT_ALL = "SELECT * FROM "
-				+ TABLE + ";";
+				+ TABLE + " As p where ree_id is not null;";
 	}
 
 	@Override
@@ -82,7 +84,9 @@ public class RealEstateTDG extends TDG{
 						rs.getString("p.province"),
 						rs.getString("p.postal_code"),
 						rs.getDate("p.date_of_construction"),
-						rs.getInt("p.total_area"));
+						rs.getInt("p.total_area"),
+						rs.getString("profile_pic"),
+						rs.getLong("price"));
 				owners_house.add(result);
 				
 			}
@@ -124,6 +128,8 @@ public class RealEstateTDG extends TDG{
 			ps.setString(7, ree.getPostal_code());
 			ps.setDate(8, ree.getDateOC());
 			ps.setInt(9, ree.gettotal_area());
+			ps.setString(10, ree.getProfile_pic());
+			ps.setLong(11, ree.getPrice());
 			//generatedKeys = ps.getGeneratedKeys();
 		} catch (SQLException e) {
 			e.printStackTrace();
